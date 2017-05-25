@@ -5,11 +5,12 @@ import (
 	"net/http"
 	"runtime"
 
-	"github.com/Massad/gin-boilerplate/controllers"
-	"github.com/Massad/gin-boilerplate/db"
+	gin "gopkg.in/gin-gonic/gin.v1"
 
-	"github.com/gin-gonic/contrib/sessions"
-	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/sessions"
+
+	"github.com/Renatdk/Bookshelf/controllers"
+	"github.com/Renatdk/Bookshelf/db"
 )
 
 //CORSMiddleware ...
@@ -34,8 +35,8 @@ func CORSMiddleware() gin.HandlerFunc {
 func main() {
 	r := gin.Default()
 
-	store, _ := sessions.NewRedisStore(10, "tcp", "localhost:6379", "", []byte("secret"))
-	r.Use(sessions.Sessions("gin-boilerplate-session", store))
+	store, _ := sessions.NewRedisStore(10, "tcp", "redis-17101.c3.eu-west-1-1.ec2.cloud.redislabs.com:17101", "", []byte("secret"))
+	r.Use(sessions.Sessions("bookshelf-session", store))
 
 	r.Use(CORSMiddleware())
 

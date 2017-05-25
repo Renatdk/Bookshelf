@@ -2,11 +2,11 @@ package db
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
+	"os"
 
 	"github.com/go-gorp/gorp"
-	_ "github.com/lib/pq" //import postgres
+	"github.com/lib/pq" //import postgres
 )
 
 //DB ...
@@ -14,22 +14,14 @@ type DB struct {
 	*sql.DB
 }
 
-const (
-	//DbUser ...
-	DbUser = "postgres"
-	//DbPassword ...
-	DbPassword = "postgres"
-	//DbName ...
-	DbName = "golang_gin_db"
-)
-
 var db *gorp.DbMap
 
 //Init ...
 func Init() {
 
-	dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
-		DbUser, DbPassword, DbName)
+	url := os.Getenv("postgres://tbzobuabpgyvwj:176b266a38ec5f4b4e84c09a2c81bdf3445e72de1a8dc314f161826385d4b070@ec2-54-75-249-162.eu-west-1.compute.amazonaws.com:5432/dc2iju1niatl10")
+	dbinfo, _ := pq.ParseURL(url)
+	dbinfo += " sslmode=require"
 
 	var err error
 	db, err = ConnectDB(dbinfo)
