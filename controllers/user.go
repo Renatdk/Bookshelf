@@ -1,11 +1,9 @@
 package controllers
 
 import (
-	"github.com/Massad/gin-boilerplate/forms"
-	"github.com/Massad/gin-boilerplate/models"
+	"github.com/Renatdk/Bookshelf/forms"
+	"github.com/Renatdk/Bookshelf/models"
 
-	"github.com/gin-gonic/contrib/sessions"
-	"github.com/gin-gonic/gin"
 )
 
 //UserController ...
