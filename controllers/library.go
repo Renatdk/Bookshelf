@@ -3,10 +3,9 @@ package controllers
 import (
 	"strconv"
 
-	gin "gopkg.in/gin-gonic/gin.v1"
-
 	"github.com/Renatdk/Bookshelf/forms"
 	"github.com/Renatdk/Bookshelf/models"
+	gin "gopkg.in/gin-gonic/gin.v1"
 )
 
 //LibraryController ...
