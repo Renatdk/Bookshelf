@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"runtime"
 
 	"github.com/gin-contrib/sessions"
@@ -76,5 +77,11 @@ func main() {
 		c.HTML(404, "404.html", gin.H{})
 	})
 
-	r.Run(":9000")
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "9000"
+	}
+
+	r.Run(":" + port)
 }
