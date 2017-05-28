@@ -63,6 +63,7 @@ func main() {
 	r.LoadHTMLGlob("./public/html/*")
 
 	r.Static("/public", "./public")
+	r.StaticFile("/favicon.ico", "./public/assets/img/favicon.ico")
 
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{
