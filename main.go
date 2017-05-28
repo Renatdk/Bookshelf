@@ -5,9 +5,8 @@ import (
 	"net/http"
 	"runtime"
 
-	gin "gopkg.in/gin-gonic/gin.v1"
-
 	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
 
 	"github.com/Renatdk/Bookshelf/controllers"
 	"github.com/Renatdk/Bookshelf/db"
@@ -52,13 +51,13 @@ func main() {
 		v1.GET("/user/signout", user.Signout)
 
 		/*** START Article ***/
-		article := new(controllers.ArticleController)
+		library := new(controllers.LibraryController)
 
-		v1.POST("/article", article.Create)
-		v1.GET("/articles", article.All)
-		v1.GET("/article/:id", article.One)
-		v1.PUT("/article/:id", article.Update)
-		v1.DELETE("/article/:id", article.Delete)
+		v1.POST("/library", library.Create)
+		v1.GET("/articles", library.All)
+		v1.GET("/library/:id", library.One)
+		v1.PUT("/library/:id", library.Update)
+		v1.DELETE("/library/:id", library.Delete)
 	}
 
 	r.LoadHTMLGlob("./public/html/*")

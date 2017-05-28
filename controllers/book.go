@@ -5,8 +5,7 @@ import (
 
 	"github.com/Renatdk/Bookshelf/forms"
 	"github.com/Renatdk/Bookshelf/models"
-
-	gin "gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 )
 
 //BookController ...
@@ -32,15 +31,15 @@ func (ctrl BookController) Create(c *gin.Context) {
 		return
 	}
 
-	articleID, err := articleModel.Create(userID, bookForm)
+	bookID, err := bookModel.Create(userID, bookForm)
 
-	if articleID > 0 && err != nil {
+	if bookID > 0 && err != nil {
 		c.JSON(406, gin.H{"message": "Book could not be created", "error": err.Error()})
 		c.Abort()
 		return
 	}
 
-	c.JSON(200, gin.H{"message": "Book created", "id": articleID})
+	c.JSON(200, gin.H{"message": "Book created", "id": bookID})
 }
 
 //All ...
@@ -53,7 +52,7 @@ func (ctrl BookController) All(c *gin.Context) {
 		return
 	}
 
-	data, err := articleModel.All(userID)
+	data, err := bookModel.All(userID)
 
 	if err != nil {
 		c.JSON(406, gin.H{"Message": "Could not get the articles", "error": err.Error()})
@@ -78,7 +77,7 @@ func (ctrl BookController) One(c *gin.Context) {
 
 	if id, err := strconv.ParseInt(id, 10, 64); err == nil {
 
-		data, err := articleModel.One(userID, id)
+		data, err := bookModel.One(userID, id)
 		if err != nil {
 			c.JSON(404, gin.H{"Message": "Book not found", "error": err.Error()})
 			c.Abort()
@@ -111,7 +110,7 @@ func (ctrl BookController) Update(c *gin.Context) {
 			return
 		}
 
-		err := articleModel.Update(userID, id, bookForm)
+		err := bookModel.Update(userID, id, bookForm)
 		if err != nil {
 			c.JSON(406, gin.H{"Message": "Book could not be updated", "error": err.Error()})
 			c.Abort()
@@ -136,7 +135,7 @@ func (ctrl BookController) Delete(c *gin.Context) {
 	id := c.Param("id")
 	if id, err := strconv.ParseInt(id, 10, 64); err == nil {
 
-		err := articleModel.Delete(userID, id)
+		err := bookModel.Delete(userID, id)
 		if err != nil {
 			c.JSON(406, gin.H{"Message": "Book could not be deleted", "error": err.Error()})
 			c.Abort()

@@ -4,7 +4,7 @@ import (
 	"github.com/Renatdk/Bookshelf/forms"
 	"github.com/Renatdk/Bookshelf/models"
 	"github.com/gin-contrib/sessions"
-	gin "gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 )
 
 //UserController ...

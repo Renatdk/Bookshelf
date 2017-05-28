@@ -10,37 +10,37 @@ import (
 
 //Book ...
 type Book struct {
-	ID        		int64    `db:"id, primarykey, autoincrement" json:"id"`
-	LibraryID 		int64    `db:"library_id" json:"-"`
-	Title     		string   `db:"title" json:"title"`
-	Description   	string   `db:"description" json:"description"`
-	UpdatedAt		int64    `db:"updated_at" json:"updated_at"`
-	CreatedAt 		int64    `db:"created_at" json:"created_at"`
-	Library   		*JSONRaw `db:"library" json:"library"`
+	ID          int64    `db:"id, primarykey, autoincrement" json:"id"`
+	LibraryID   int64    `db:"library_id" json:"-"`
+	Title       string   `db:"title" json:"title"`
+	Description string   `db:"description" json:"description"`
+	UpdatedAt   int64    `db:"updated_at" json:"updated_at"`
+	CreatedAt   int64    `db:"created_at" json:"created_at"`
+	Library     *JSONRaw `db:"library" json:"library"`
 }
 
 //BookModel ...
 type BookModel struct{}
 
 //Create ...
-func (m BookModel) Create(libraryID int64, form forms.BookForm) (bookID int64, err error) {
+func (m BookModel) Create(UserID int64, form forms.BookForm) (bookID int64, err error) {
 	getDb := db.GetDB()
 
 	libraryModel := new(LibraryModel)
 
-	checkLibrary, err := libraryModel.One(libraryID)
+	checkLibrary, err := libraryModel.One(UserID, form.LibraryID)
 
 	if err != nil && checkLibrary.ID > 0 {
 		return 0, errors.New("Library doesn't exist")
 	}
 
-	_, err = getDb.Exec("INSERT INTO book(library_id, title, description, updated_at, created_at) VALUES($1, $2, $3, $4, $5) RETURNING id", libraryID, form.Title, form.Description, time.Now().Unix(), time.Now().Unix())
+	_, err = getDb.Exec("INSERT INTO book(library_id, title, description, updated_at, created_at) VALUES($1, $2, $3, $4, $5) RETURNING id", form.LibraryID, form.Title, form.Description, time.Now().Unix(), time.Now().Unix())
 
 	if err != nil {
 		return 0, err
 	}
 
-	bookID, err = getDb.SelectInt("SELECT id FROM book WHERE library_id=$1 ORDER BY id DESC LIMIT 1", libraryID)
+	bookID, err = getDb.SelectInt("SELECT id FROM book WHERE library_id=$1 ORDER BY id DESC LIMIT 1", form.LibraryID)
 
 	return bookID, err
 }
