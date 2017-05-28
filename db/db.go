@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/go-gorp/gorp"
-	//import postgres
+	_ "github.com/lib/pq" //import postgres
 )
 
 //DB ...
