@@ -1,15 +1,59 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-    <title>Gin Boilerplate</title>
-     <link rel="books icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Bookshelf - тестовое задание</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="/public/assets/vendor/Skeleton-2.0.4/css/normalize.css">
+  <link rel="stylesheet" href="/public/assets/vendor/Skeleton-2.0.4/css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/favicon.png">
+
 </head>
-
 <body>
-    <br /> <br /><br />
-    <center>
-        <h3>Welcome to Golang {{ .goVersion}} with <a href="https://github.com/Massad/gin-boilerplate" target="_blank" title="Gin Boilerplate">Gin Boilerplate</a> version: {{ .ginBoilerplateVersion}}</h3>
-    </center>
-</body>
 
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 10%">
+        <h4>Bookshelf</h4>
+        <p>Тестове задание на вакансию golang программиста. Для регистрации пройдите по ссылке - <a href="/pages/login/signup">Регистрация</a>.</p>
+        <form>
+          <div class="row">
+            <div class="six columns">
+              <label for="emailInput">Ваш email</label>
+              <input class="u-full-width" type="email" placeholder="name@mailbox.com" id="emailInput" required>
+            </div>
+            <div class="six columns">
+              <label for="passwordInput">Пароль</label>
+              <input class="u-full-width" type="password" placeholder="Пароль" id="passwordInput" required>
+            </div>
+          </div>
+          <input class="button-primary" type="submit" value="вход">
+        </form>
+      </div>
+    </div>
+  </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
 </html>
