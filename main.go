@@ -35,8 +35,8 @@ func CORSMiddleware() gin.HandlerFunc {
 func main() {
 	r := gin.Default()
 
-	store, _ := sessions.NewRedisStore(10, "tcp", "redis-17101.c3.eu-west-1-1.ec2.cloud.redislabs.com:17101", "", []byte("secret"))
-	r.Use(sessions.Sessions("bookshelf-session", store))
+	store, _ := sessions.NewRedisStore(10, "tcp", "redis-17101.c3.eu-west-1-1.ec2.cloud.redislabs.com:17101", "mzwdsZ5hrjgv0uIf", []byte("secret"))
+	r.Use(sessions.Sessions("redis-bookshelf-renat-8319125", store))
 
 	r.Use(CORSMiddleware())
 
