@@ -13,6 +13,7 @@ type Book struct {
 	ID          int64    `db:"id, primarykey, autoincrement" json:"id"`
 	LibraryID   int64    `db:"library_id" json:"-"`
 	Title       string   `db:"title" json:"title"`
+	Author      string   `db:"author", json:"author"`
 	Description string   `db:"description" json:"description"`
 	UpdatedAt   int64    `db:"updated_at" json:"updated_at"`
 	CreatedAt   int64    `db:"created_at" json:"created_at"`
@@ -34,7 +35,7 @@ func (m BookModel) Create(UserID int64, form forms.BookForm) (bookID int64, err 
 		return 0, errors.New("Library doesn't exist")
 	}
 
-	_, err = getDb.Exec("INSERT INTO book(library_id, title, description, updated_at, created_at) VALUES($1, $2, $3, $4, $5) RETURNING id", form.LibraryID, form.Title, form.Description, time.Now().Unix(), time.Now().Unix())
+	_, err = getDb.Exec("INSERT INTO book(library_id, title, author, description, updated_at, created_at) VALUES($1, $2, $3, $4, $5) RETURNING id", form.LibraryID, form.Title, form.Author, form.Description, time.Now().Unix(), time.Now().Unix())
 
 	if err != nil {
 		return 0, err
@@ -47,13 +48,13 @@ func (m BookModel) Create(UserID int64, form forms.BookForm) (bookID int64, err 
 
 //One ...
 func (m BookModel) One(libraryID, id int64) (book Book, err error) {
-	err = db.GetDB().SelectOne(&book, "SELECT b.id, b.title, b.description, b.updated_at, b.created_at, json_build_object('id', l.id, 'title', l.title, 'address', l.address) AS library FROM book b LEFT JOIN public.library l ON b.library_id = l.id WHERE b.library_id=$1 AND b.id=$2 GROUP BY b.id, b.title, b.description, b.updated_at, b.created_at, l.id, l.name, l.email LIMIT 1", libraryID, id)
+	err = db.GetDB().SelectOne(&book, "SELECT b.id, b.title, b.author, b.description, b.updated_at, b.created_at, json_build_object('id', l.id, 'title', l.title, 'address', l.address) AS library FROM book b LEFT JOIN public.library l ON b.library_id = l.id WHERE b.library_id=$1 AND b.id=$2 GROUP BY b.id, b.title, b.author, b.description, b.updated_at, b.created_at, l.id, l.name, l.email LIMIT 1", libraryID, id)
 	return book, err
 }
 
 //All ...
 func (m BookModel) All(libraryID int64) (books []Book, err error) {
-	_, err = db.GetDB().Select(&books, "SELECT b.id, b.title, b.description, b.updated_at, b.created_at, json_build_object('id', l.id, 'title', l.title, 'address', l.address) AS library FROM book b LEFT JOIN public.library l ON b.library_id = l.id WHERE b.library_id=$1 GROUP BY b.id, b.title, b.description, b.updated_at, b.created_at, l.id, l.name, l.email ORDER BY b.id DESC", libraryID)
+	_, err = db.GetDB().Select(&books, "SELECT b.id, b.title, b.author, b.description, b.updated_at, b.created_at, json_build_object('id', l.id, 'title', l.title, 'address', l.address) AS library FROM book b LEFT JOIN public.library l ON b.library_id = l.id WHERE b.library_id=$1 GROUP BY b.id, b.title, b.author, b.description, b.updated_at, b.created_at, l.id, l.name, l.email ORDER BY b.id DESC", libraryID)
 	return books, err
 }
 
@@ -65,7 +66,7 @@ func (m BookModel) Update(libraryID int64, id int64, form forms.BookForm) (err e
 		return errors.New("Book not found")
 	}
 
-	_, err = db.GetDB().Exec("UPDATE book SET title=$1, description=$2, updated_at=$3 WHERE id=$4", form.Title, form.Description, time.Now().Unix(), id)
+	_, err = db.GetDB().Exec("UPDATE book SET title=$1, author=$2, description=$3, updated_at=$4 WHERE id=$5", form.Title, form.Author, form.Description, time.Now().Unix(), id)
 
 	return err
 }
